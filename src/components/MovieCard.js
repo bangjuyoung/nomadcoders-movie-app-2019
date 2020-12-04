@@ -2,14 +2,14 @@ import "./MovieCard.css";
 
 function MovieCard(props) {
   const { movie } = props;
-  const {title, year, generes, summary, poster} = movie;
+  const {title, year, genres, summary, medium_cover_image:poster } = movie;
 
   return (
     <section className="movie-card">
       <div className="movie-card__body">
         <h2 className="movie-card__title">{title}</h2>
         <p className="movie-card__caption">
-          <time dateTime="2021">{year}</time> {generes}
+          <time dateTime="2021">{year}</time> {genres.join(', ')}
         </p>
         <p className="movie-card__text">
           {summary.slice(0, 100)}...
