@@ -1,11 +1,11 @@
+import PropTypes from "prop-types";
 import "./MovieCard.css";
 
 function MovieCard(props) {
-  const { movie } = props;
-  const {title, year, genres, summary, medium_cover_image:poster } = movie;
+  const { movie: {id, title, year, genres, summary, medium_cover_image:poster } } = props;
 
   return (
-    <section className="movie-card">
+    <section id={`movie${id}`} className="movie-card">
       <div className="movie-card__body">
         <h2 className="movie-card__title">{title}</h2>
         <p className="movie-card__caption">
@@ -20,6 +20,17 @@ function MovieCard(props) {
       </div>
     </section>
   );
+}
+
+MovieCard.propTypes = {
+  movie: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    year: PropTypes.number,
+    genres: PropTypes.array,
+    summary: PropTypes.string,
+    medium_cover_image: PropTypes.string
+  })
 }
 
 export default MovieCard;
