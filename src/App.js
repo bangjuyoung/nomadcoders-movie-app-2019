@@ -1,70 +1,53 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import './App.css';
 import MovieCard from "./components/MovieCard";
 
-class App extends React.Component {
+function App() {
 
-  constructor(props) {
-    super(props);
+  const [isLoading, setIsLoading] = useState(true);
+  const [movies, setMovies] = useState(null);
 
-    this.state = {
-      movies: null,
-      isLoading: true
-    }
-  }
+  useEffect(() => {
 
-  componentDidMount() {
-    this.getMovies();
-  }
-
-  getMovies() {
     axios
       .get('https://yts-proxy.now.sh/list_movies.json?sort_by=rating')
       .then(({data}) => {
         const { data: result } = data;
-        this.setState({
-          movies: result['movies']
-        });
+        setMovies( result['movies']);
       })
       .catch(error => {
-        console.log(error);
+        console.error(error);
       })
       .then(() => {
         console.log('always executed');
 
         setTimeout(() => {
-          this.setState({
-            isLoading: false
-          });
+          setIsLoading(false);
         }, 2000);
 
       });
-  }
+  }, []);
 
-  render() {
-    const { isLoading, movies } = this.state;
-
-    return (
-      <main className="container">
-        <div className="movies">
-          {
-            isLoading
-              ? <div className="movie--loading">Loading...</div>
-              : movies && movies.map(movie => {
-                return (
-                  <div className="movie" key={movie.id} >
-                    <MovieCard movie={movie} />
-                  </div>
-                )
-              }
-            )
-          }
-        </div>
-      </main>
-    );
-  }
+  return (
+    <main className="container">
+      <div className="movies">
+        {
+          isLoading
+            ? <div className="movie--loading">Loading...</div>
+            : movies && movies.map(movie => {
+              return (
+                <div className="movie" key={movie.id} >
+                  <MovieCard movie={movie} />
+                </div>
+              )
+            }
+          )
+        }
+      </div>
+    </main>
+  );
 }
 
 export default App;
