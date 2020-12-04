@@ -1,4 +1,5 @@
 import './App.css';
+import MovieCard from "./components/MovieCard";
 
 const movies = [1,2,3,4,5,6].map(item => (
   {
@@ -17,25 +18,10 @@ function App() {
       <div className="movies">
         {
           movies.map(movie => {
-
-            const {title, year, generes, summary, poster} = movie;
-
+            
             return (
               <div className="movie">
-                <section className="movie-card">
-                  <div className="movie-card__body">
-                    <h2 className="movie-card__title">{title}</h2>
-                    <p className="movie-card__caption">
-                      <time dateTime="2021">{year}</time> {generes}
-                    </p>
-                    <p className="movie-card__text">
-                      {summary.slice(0, 100)}...
-                    </p>
-                  </div>
-                  <div className="movie-card__thumbnail">
-                    <img src={poster} alt=""/>
-                  </div>
-                </section>
+                <MovieCard movie={movie} />
               </div>
             )
             }
