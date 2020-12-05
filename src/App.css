@@ -38,6 +38,14 @@ h6 {
   padding-right: 1rem;
 }
 
+.page-nav {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: #f2f4f8;
+}
+
 .movies {
   display: flex;
   flex-wrap: wrap;
