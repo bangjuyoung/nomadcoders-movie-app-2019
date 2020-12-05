@@ -9,23 +9,22 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [movies, setMovies] = useState(null);
 
-  async function getMovies() {
-    try {
-      let moviesPromise = await axios.get('https://yts-proxy.now.sh/t_list_movies.json?sort_by=rating');
-      setMovies(moviesPromise['data']['data']['movies']);
-
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
-    }
-  }
-
   useEffect(() => {
+    const moviesPromise = async () => {
+      try {
+        let moviesPromise = await axios.get('https://yts-proxy.now.sh/list_movies.json?sort_by=rating');
+        setMovies(moviesPromise['data']['data']['movies']);
 
-    getMovies();
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
+      }
+    };
+
+    moviesPromise();
 
   }, []);
 
