@@ -1,8 +1,9 @@
-import { Link, Route } from "react-router-dom";
+import { Link, Route, Switch } from "react-router-dom";
 import "./App.css";
 import About from "./pages/About";
 import Movies from "./pages/Movies";
 import { Fragment } from "react";
+import MovieDetail from "./pages/MovieDetail";
 
 function App() {
   return (
@@ -16,15 +17,39 @@ function App() {
       </nav>
 
       <main className="container">
-        <Route exact path="/">
-          Welcome Movie World
-        </Route>
-        <Route path="/about">
-          <About />
-        </Route>
-        <Route path="/movies">
-          <Movies />
-        </Route>
+        <Switch>
+          <Route exact path="/">
+            Welcome Movie World
+          </Route>
+          <Route path="/about" component={About} />
+          <Route
+            path="/movies/:id"
+            render={({ location }) => {
+              const {
+                id,
+                title,
+                year,
+                genres,
+                large_cover_image: poster,
+                summary,
+                rating,
+              } = location.state.movie;
+
+              return (
+                <MovieDetail
+                  id={id}
+                  title={title}
+                  year={year}
+                  genres={genres}
+                  poster={poster}
+                  summary={summary}
+                  rating={rating}
+                />
+              );
+            }}
+          />
+          <Route exact path="/movies" component={Movies} />
+        </Switch>
       </main>
     </Fragment>
   );

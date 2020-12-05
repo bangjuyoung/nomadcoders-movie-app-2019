@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Movies.css";
 
 import MovieCard from "../components/MovieCard";
 
 function Movies(props) {
+  console.log("Movies");
+
   const [isLoading, setIsLoading] = useState(true);
   const [movies, setMovies] = useState(null);
 
@@ -36,14 +39,19 @@ function Movies(props) {
         movies.map((movie) => {
           return (
             <div className="movie" key={movie.id}>
-              <MovieCard
-                id={movie.id}
-                title={movie.title}
-                year={movie.year}
-                genres={movie.genres}
-                summary={movie.summary}
-                poster={movie.medium_cover_image}
-              />
+              <Link
+                to={{ pathname: `movies/${movie.id}`, state: { movie } }}
+                className="movie-link"
+              >
+                <MovieCard
+                  id={movie.id}
+                  title={movie.title}
+                  year={movie.year}
+                  genres={movie.genres}
+                  summary={movie.summary}
+                  poster={movie.medium_cover_image}
+                />
+              </Link>
             </div>
           );
         })

@@ -20,3 +20,9 @@
     height: 100vh;
     text-transform: uppercase;
 }
+
+.movie-link {
+    display: flex;
+    color: currentColor;
+    text-decoration: none;
+}
